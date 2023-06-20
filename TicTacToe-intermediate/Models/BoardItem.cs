@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
-namespace TicTacToe.Pages
+namespace TicTacToe.Models
 {
     public class BoardItem : INotifyPropertyChanged
     {
@@ -35,11 +30,8 @@ namespace TicTacToe.Pages
                 if (index == value) return;
                 index = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Index)));
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IndexText)));
             }
         }
-
-        public string IndexText => Index.ToString();
 
         private int x = 0;
         public int X

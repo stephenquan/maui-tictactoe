@@ -8,7 +8,8 @@
                          >
         <Label Text="Tic Tac Toe (intermediate)"
                />
-        <Button Text="Start"
+        <Button HorizontalOptions="Center"
+                Text="Start"
                 Clicked="OnNavigate"
                 CommandParameter="GamePage"
                 />
