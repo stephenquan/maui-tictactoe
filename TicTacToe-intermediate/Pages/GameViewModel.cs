@@ -6,7 +6,7 @@ namespace TicTacToe.Pages
 {
     public class GameViewModel : INotifyPropertyChanged
     {
-        ObservableCollection<string> board = new ObservableCollection<string>(new List<string>() { "", "", "", "", "", "", "", "", "" });
+        ObservableCollection<BoardItem> board;
         string winner = "";
         int frameWidth = 100;
         int frameHeight = 100;
@@ -15,20 +15,34 @@ namespace TicTacToe.Pages
 
         public GameViewModel()
         {
+            List<BoardItem> items = new List<BoardItem>();
+            items.Add(new BoardItem(0, 0, 0, false, true, false, true, ' '));
+            items.Add(new BoardItem(1, 1, 0, false, true, true, true, ' '));
+            items.Add(new BoardItem(2, 2, 0, false, true, true, false, ' '));
+            items.Add(new BoardItem(3, 0, 1, true, true, false, true, ' '));
+            items.Add(new BoardItem(4, 1, 1, true, true, true, true, ' '));
+            items.Add(new BoardItem(5, 2, 1, true, true, true, false, ' '));
+            items.Add(new BoardItem(6, 0, 2, true, false, false, true, ' '));
+            items.Add(new BoardItem(7, 1, 2, true, false, true, true, ' '));
+            items.Add(new BoardItem(8, 2, 2, true, false, true, false, ' '));
+            board = new ObservableCollection<BoardItem>(items);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Board)));
+
             MoveCommand = new Command<string>(
                 execute: async (string arg) =>
                 {
+                    Console.WriteLine("MoveCommand", arg);
                     if (Winner != "") return;
                     int i = Int32.Parse(arg);
-                    if (Board[i] != "") return;
-                    PlaceMove(i, "X");
+                    if (Board[i].Ch != ' ') return;
+                    PlaceMove(i, 'X');
                     CheckWinner();
                     List<int> moves = AvailableMoves();
                     if (moves.Count == 0) return;
                     await Task.Delay(100);
                     Random r = new Random();
                     int m = moves[r.Next(moves.Count)];
-                    PlaceMove(m, "O");
+                    PlaceMove(m, 'O');
                     CheckWinner();
                 }
                 );
@@ -36,7 +50,7 @@ namespace TicTacToe.Pages
             NewGameCommand = new Command(
                 execute: () =>
                 {
-                    Parallel.For(0, 9, i => Board[i] = "");
+                    Parallel.For(0, 9, i => Board[i].Ch = ' ');
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Board)));
                     Winner = "";
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(WinnerText)));
@@ -48,18 +62,18 @@ namespace TicTacToe.Pages
         public List<int> AvailableMoves()
         {
             if (Winner != "") return new List<int>();
-            return Board.Select((p, i) => p == "" ? i : -1).Where(i => i != -1).ToList();
+            return Board.Select((p, i) => p.Ch == ' ' ? i : -1).Where(i => i != -1).ToList();
         }
 
-        public void PlaceMove(int pos, string mark)
+        public void PlaceMove(int pos, char mark)
         {
-            Board[pos] = mark;
+            Board[pos].Ch = mark;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Board)));
         }
 
         public void CheckWinner(int a, int b, int c)
         {
-            string tst = Board[a] + Board[b] + Board[c];
+            string tst = Board[a].Ch.ToString() + Board[b].Ch.ToString() + Board[c].Ch.ToString();
             if (tst == "XXX") Winner = "X";
             if (tst == "OOO") Winner = "O";
         }
@@ -82,7 +96,7 @@ namespace TicTacToe.Pages
             }
         }
 
-        public ObservableCollection<string> Board => board;
+        public ObservableCollection<BoardItem> Board => board;
 
         public string Winner
         {
