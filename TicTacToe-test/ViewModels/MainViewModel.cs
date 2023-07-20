@@ -7,37 +7,32 @@ namespace TicTacToe_test.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
-        private ObservableCollection<Square> _squares;
+        private ObservableCollection<Square> _squares = new ObservableCollection<Square>(
+            Enumerable.Range(0, 9).Select(i => new Square()
+            {
+                Id = i,
+                X = i % 3,
+                Y = i / 3,
+                Ch = ' '
+            })
+         );
 
         public MainViewModel()
         {
-            Random rand = new Random();
-            Squares = new ObservableCollection<Square>(Enumerable.Range(0, 9).Select(i => {
-                var x = i % 3;
-                var y = i / 3;
-                return new Square()
-                {
-                    Id = i,
-                    X = x,
-                    Y = y,
-                    Top = y != 0,
-                    Bottom = y != 2,
-                    Left = x != 0,
-                    Right = x != 2,
-                    Ch = "XO "[rand.Next(3)]
-                };
-                }
-            ));
+            RandomizeGame();
+        }
+
+        [RelayCommand]
+        void ResetGame()
+        {
+            foreach (var square in Squares) square.Ch = ' ';
         }
 
         [RelayCommand]
         void RandomizeGame()
         {
             var rand = new Random();
-            foreach (var square in Squares)
-            {
-                square.Ch = "XO "[rand.Next(3)];
-            }
+            foreach (var square in Squares) square.Ch = "XO "[rand.Next(3)];
         }
     }
 }

@@ -15,18 +15,6 @@ namespace TicTacToe_test.ViewModels
         private int _y;
 
         [ObservableProperty]
-        private bool _top;
-
-        [ObservableProperty]
-        private bool _bottom;
-
-        [ObservableProperty]
-        private bool _left;
-
-        [ObservableProperty]
-        private bool _right;
-
-        [ObservableProperty]
         private char _ch;
 
         [RelayCommand]
