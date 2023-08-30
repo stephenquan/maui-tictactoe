@@ -22,4 +22,9 @@ public partial class Cell : ObservableObject
         "O" => "cell_o.png",
         _ => ""
     };
+
+    public Cell(int I = 0)
+    {
+        this.I = I;
+    }
 }
