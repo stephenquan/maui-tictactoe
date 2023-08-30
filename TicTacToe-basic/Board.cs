@@ -1,8 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Maui.Controls.Shapes;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Text.Json;
 
 namespace TicTacToe;
 
@@ -61,7 +58,6 @@ public partial class Board : ObservableObject
     {
         Cells[I].V = V;
         EmitPropertyChanged();
-        int s = Score;
         return this;
     }
 

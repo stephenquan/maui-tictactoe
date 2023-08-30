@@ -19,6 +19,12 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty]
     private int _countTie = 0;
 
+    [ObservableProperty]
+    private int _maxLevel = 5;
+
+    [ObservableProperty]
+    private int _level = 4;
+
     private void IncrementScores()
     {
         if (Board.WinX.Count > 0)
@@ -42,10 +48,8 @@ public partial class MainViewModel : ObservableObject
         }
 
         await Task.Delay(250);
-        var Moves = Board.AvailableMoves.OrderBy(M => -Board.TryMove(M, "O").Score).ToList();
-        int MaxLevel = 5;
-        int Level = 4;
-        int Move = random.Next(MaxLevel) <= Level ? Moves[0] : Moves[random.Next(Moves.Count)];
+        var BestMoves = Board.AvailableMoves.OrderBy(M => -Board.TryMove(M, "O").Score).ToList();
+        int Move = random.Next(MaxLevel) < Level ? BestMoves[0] : BestMoves[random.Next(BestMoves.Count)];
         Board.PlayMove(Move, "O");
         if (Board.IsGameOver)
         {
