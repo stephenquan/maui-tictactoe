@@ -1,6 +1,4 @@
-﻿using TicTacToe.Pages;
-
-namespace TicTacToe;
+﻿namespace TicTacToe;
 
 public partial class AppShell : Shell
 {
