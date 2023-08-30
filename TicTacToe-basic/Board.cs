@@ -50,7 +50,11 @@ public partial class Board : ObservableObject
 
     public void Clear()
     {
-        foreach (var c in Cells) c.V = String.Empty;
+        foreach (var c in Cells)
+        {
+            c.V = String.Empty;
+            c.O = 1.0;
+        }
         EmitPropertyChanged();
     }
 

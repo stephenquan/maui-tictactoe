@@ -16,6 +16,9 @@ public partial class Cell : ObservableObject
     [NotifyPropertyChangedFor(nameof(Img))]
     private string _v = string.Empty;
 
+    [ObservableProperty]
+    private double _o = 1.0;
+
     public string Img => V switch
     {
         "X" => "cell_x.png",

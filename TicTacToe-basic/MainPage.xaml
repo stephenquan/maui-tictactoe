@@ -5,7 +5,9 @@
              xmlns:local="clr-namespace:TicTacToe"
              x:Class="TicTacToe.MainPage"
              BindingContext="{local:MainViewModel}"
-             BackgroundColor="Black">
+             BackgroundColor="Black"
+             Title="{Binding Localizer[TITLE_MAIN]}"
+             FlowDirection="{Binding FlowDirection}">
     
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -14,7 +16,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="*,120">
+    <Grid RowDefinitions="*,Auto,Auto">
         <Border BackgroundColor="Transparent" Stroke="Transparent" Margin="5">
         <AbsoluteLayout>
             <AbsoluteLayout.WidthRequest>
@@ -31,7 +33,7 @@
             <Grid AbsoluteLayout.LayoutFlags="All"
               AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
               BindableLayout.ItemsSource="{Binding Board.Cells}"
-              BackgroundColor="LightSteelBlue"
+              BackgroundColor="Transparent"
               RowDefinitions="*,*,*"
               ColumnDefinitions="*,*,*">
                 <BindableLayout.ItemTemplate>
@@ -39,12 +41,12 @@
                         <ImageButton Grid.Row="{Binding R}"
                                  Grid.Column="{Binding C}"
                                  Source="{Binding Img}"
+                                 Opacity="{Binding O}"
                                  BackgroundColor="Black"
                                  Command="{Binding ClickCommand,Source={RelativeSource AncestorType={x:Type local:MainViewModel}}}"
                                  CommandParameter="{Binding I}"/>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
-
             </Grid>
 
             <Rectangle AbsoluteLayout.LayoutFlags="All"
@@ -72,13 +74,20 @@
               VerticalOptions="Center"
               RowSpacing="5"
               Margin="5">
-            <Label Grid.Row="0" Grid.Column="0" Text="Player" TextColor="White" HorizontalOptions="Center"/>
+            <Label Grid.Row="0" Grid.Column="0" Text="{Binding Localizer[LABEL_PLAYER]}" TextColor="White" HorizontalOptions="Center"/>
             <Label Grid.Row="1" Grid.Column="0" Text="{Binding CountWinX}" TextColor="White" HorizontalOptions="Center"/>
-            <Label Grid.Row="0" Grid.Column="1" Text="Tie" TextColor="White" HorizontalOptions="Center"/>
+            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Localizer[LABEL_TIES]}" TextColor="White" HorizontalOptions="Center"/>
             <Label Grid.Row="1" Grid.Column="1" Text="{Binding CountTie}" TextColor="White" HorizontalOptions="Center"/>
-            <Label Grid.Row="0" Grid.Column="2" Text="Computer" TextColor="White" HorizontalOptions="Center"/>
+            <Label Grid.Row="0" Grid.Column="2" Text="{Binding Localizer[LABEL_COMPUTER]}" TextColor="White" HorizontalOptions="Center"/>
             <Label Grid.Row="1" Grid.Column="2" Text="{Binding CountWinO}" TextColor="White" HorizontalOptions="Center"/>
         </Grid>
+                            <ImageButton Grid.Row="2" Source="{Binding Culture.TwoLetterISOLanguageName,StringFormat='flag_{0}.png'}"
+                                       WidthRequest="32"
+                                       HeightRequest="32"
+                                         Margin="5"
+                                         HorizontalOptions="Center"
+                                         BackgroundColor="Transparent"
+                                         Command="{Binding ChangeLanguageCommand}"/>
     </Grid>
 
 </ContentPage>
