@@ -13,7 +13,7 @@ public partial class MainViewModel : ObservableObject
     static private MainViewModel _current;
     static public MainViewModel Current => _current ??= new MainViewModel();
 
-    private IStringLocalizer _localizer = ServiceHelper.GetService<IStringLocalizer<AppStrings>>();
+    private IStringLocalizer _localizer;
     public IStringLocalizer Localizer => _localizer ??= ServiceHelper.GetService<IStringLocalizer<AppStrings>>();
     public string this[string name] => Localizer[name];
     public string this[string name, params object[] arguments] => Localizer[name, arguments];
