@@ -4,9 +4,16 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:TicTacToe"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Flyout"
+    BindingContext="{x:Static local:MainViewModel.Current}" >
     <ShellContent
-        Title="Home"
+        Title="{Binding [TITLE_MAIN]}"
+        Icon="icon_home.png"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+    <ShellContent
+        Title="{Binding [TITLE_SETTINGS]}"
+        Icon="icon_gear.png"
+        ContentTemplate="{DataTemplate local:SettingsPage}"
+        Route="SettingsPage"/>
 </Shell>

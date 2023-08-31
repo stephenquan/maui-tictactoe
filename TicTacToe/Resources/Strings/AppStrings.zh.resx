@@ -120,6 +120,9 @@
   <data name="LABEL_COMPUTER" xml:space="preserve">
     <value>电脑</value>
   </data>
+  <data name="LABEL_LEVEL" xml:space="preserve">
+    <value>等级： {0}</value>
+  </data>
   <data name="LABEL_PLAYER" xml:space="preserve">
     <value>玩家</value>
   </data>
@@ -128,5 +131,8 @@
   </data>
   <data name="TITLE_MAIN" xml:space="preserve">
     <value>井字棋</value>
+  </data>
+  <data name="TITLE_SETTINGS" xml:space="preserve">
+    <value>设置</value>
   </data>
 </root>

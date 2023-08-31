@@ -70,6 +70,15 @@ namespace TicTacToe.Resources.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Level: {0}.
+        /// </summary>
+        internal static string LABEL_LEVEL {
+            get {
+                return ResourceManager.GetString("LABEL_LEVEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Player.
         /// </summary>
         internal static string LABEL_PLAYER {
@@ -93,6 +102,15 @@ namespace TicTacToe.Resources.Strings {
         internal static string TITLE_MAIN {
             get {
                 return ResourceManager.GetString("TITLE_MAIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string TITLE_SETTINGS {
+            get {
+                return ResourceManager.GetString("TITLE_SETTINGS", resourceCulture);
             }
         }
     }

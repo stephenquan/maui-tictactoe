@@ -10,8 +10,13 @@ public partial class MainViewModel : ObservableObject
 {
     private Random random = new Random();
 
-    [ObservableProperty]
+    static private MainViewModel _current;
+    static public MainViewModel Current => _current ??= new MainViewModel();
+
     private IStringLocalizer _localizer = ServiceHelper.GetService<IStringLocalizer<AppStrings>>();
+    public IStringLocalizer Localizer => _localizer ??= ServiceHelper.GetService<IStringLocalizer<AppStrings>>();
+    public string this[string name] => Localizer[name];
+    public string this[string name, params object[] arguments] => Localizer[name, arguments];
 
     public FlowDirection FlowDirection => Culture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
 
@@ -28,10 +33,10 @@ public partial class MainViewModel : ObservableObject
     private int _countTie = 0;
 
     [ObservableProperty]
-    private int _maxLevel = 100;
+    [NotifyPropertyChangedFor(nameof(LevelText))]
+    private int _level = 4;
 
-    [ObservableProperty]
-    private int _level = 75;
+    public string LevelText => this["LABEL_LEVEL", Level];
 
     private void IncrementScores()
     {
@@ -74,25 +79,20 @@ public partial class MainViewModel : ObservableObject
             if (value.Name == CultureInfo.CurrentUICulture.Name) return;
             CultureInfo.CurrentCulture = CultureInfo.CurrentUICulture = value;
             OnPropertyChanged(nameof(Culture));
-            OnPropertyChanged(nameof(Localizer));
+            OnPropertyChanged("Item");
             OnPropertyChanged(nameof(FlowDirection));
+            OnPropertyChanged(nameof(LevelText));
         }
     }
 
-    private List<CultureInfo> Languages = new List<CultureInfo>()
+    [ObservableProperty]
+    private List<CultureInfo> _languages = new List<CultureInfo>()
     {
         new CultureInfo("en-US"),
         new CultureInfo("fr-FR"),
         new CultureInfo("de-DE"),
         new CultureInfo("zh-CN"),
     };
-
-    [ObservableProperty]
-    private int _languageIndex = 0;
-
-    [RelayCommand]
-    private void ChangeLanguage()
-        => Culture = Languages[LanguageIndex = (LanguageIndex + 1) % Languages.Count];
 
     [RelayCommand]
     private async Task Click(int Index)
@@ -108,8 +108,10 @@ public partial class MainViewModel : ObservableObject
         }
 
         await Task.Delay(250);
-        var BestMoves = Board.AvailableMoves.OrderBy(M => -Board.TryMove(M, "O").Score).ToList();
-        int Move = random.Next(MaxLevel) < Level ? BestMoves[0] : BestMoves[random.Next(BestMoves.Count)];
+        var BestMoves = Board.AvailableMoves
+            .OrderBy(M => random.Next())
+            .OrderBy(M => -Board.TryMove(M, "O").Score).ToList();
+        int Move = random.Next(5) < Level ? BestMoves[0] : BestMoves[random.Next(BestMoves.Count)];
         Board.PlayMove(Move, "O");
         if (Board.IsGameOver)
         {
@@ -118,4 +120,5 @@ public partial class MainViewModel : ObservableObject
             return;
         }
     }
+
 }

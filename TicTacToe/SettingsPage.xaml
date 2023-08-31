@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TicTacToe"
+             x:Class="TicTacToe.SettingsPage"
+             BindingContext="{x:Static local:MainViewModel.Current}"
+             Title="{Binding [TITLE_SETTINGS]}"
+             BackgroundColor="Black">
+
+    <VerticalStackLayout
+        Spacing="20"
+        VerticalOptions="Center" >
+
+        <Label
+            Text="{Binding Culture.NativeName}"
+            TextColor="White"
+            HorizontalOptions="Center" />
+
+        <CollectionView
+            ItemsSource="{Binding Languages}"
+            ItemsLayout="HorizontalList"
+            SelectedItem="{Binding Culture,Mode=TwoWay}"
+            SelectionMode="Single"
+            HorizontalOptions="Center">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        BackgroundColor="Black"
+                        BorderColor="Silver"
+                        Margin="5">
+                        <VerticalStackLayout>
+                            <Image
+                                Source="{Binding TwoLetterISOLanguageName,StringFormat='flag_{0}.png'}"
+                                WidthRequest="32"
+                                HeightRequest="32"
+                                HorizontalOptions="Center" />
+                            <Label
+                                Text="{Binding Name}"
+                                TextColor="Silver"
+                                HorizontalOptions="Center" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+        <Label
+            Text="{Binding LevelText}"
+            TextColor="White"
+            HorizontalOptions="Center" />
+
+        <Slider
+            WidthRequest="100"
+            Minimum="1"
+            Maximum="5"
+            Value="{Binding Level,Mode=TwoWay}"
+            HorizontalOptions="Center" />
+        
+    </VerticalStackLayout>
+    
+</ContentPage>
