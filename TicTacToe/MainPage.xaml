@@ -1,85 +1,130 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             xmlns:local="clr-namespace:TicTacToe"
-             x:Class="TicTacToe.MainPage"
-             BackgroundColor="Black"
-             BindingContext="{x:Static local:MainViewModel.Current}"
-             Title="{Binding [TITLE_MAIN]}"
-             FlowDirection="{Binding FlowDirection}">
-    
+<ContentPage
+    x:Class="TicTacToe.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TicTacToe"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Title="{Binding [TITLE_MAIN]}"
+    BackgroundColor="Black"
+    FlowDirection="{Binding FlowDirection}">
+
     <ContentPage.Resources>
         <ResourceDictionary>
-            <toolkit:MathExpressionConverter x:Key="MathExpressionConverter"/>
-            <toolkit:MultiMathExpressionConverter x:Key="MultiMathExpressionConverter"/>
+            <toolkit:MathExpressionConverter x:Key="MathExpressionConverter" />
+            <toolkit:MultiMathExpressionConverter x:Key="MultiMathExpressionConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <Grid RowDefinitions="*,Auto">
-        <Border BackgroundColor="Transparent" Stroke="Transparent" Margin="5">
-        <AbsoluteLayout>
-            <AbsoluteLayout.WidthRequest>
-                <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}"
-                          ConverterParameter="min(x0,x1)">
-                    <Binding Path="Width" Source="{RelativeSource AncestorType={x:Type Border}}" FallbackValue="100"/>
-                    <Binding Path="Height" Source="{RelativeSource AncestorType={x:Type Border}}" FallbackValue="100"/>
-                </MultiBinding>
-            </AbsoluteLayout.WidthRequest>
-            <AbsoluteLayout.HeightRequest>
-                <Binding Path="WidthRequest" Source="{RelativeSource Self}"/>
-            </AbsoluteLayout.HeightRequest>
+        <Border
+            Margin="5"
+            BackgroundColor="Transparent"
+            Stroke="Transparent">
+            <AbsoluteLayout>
+                <AbsoluteLayout.WidthRequest>
+                    <MultiBinding Converter="{StaticResource MultiMathExpressionConverter}" ConverterParameter="min(x0,x1)">
+                        <Binding
+                            FallbackValue="100"
+                            Path="Width"
+                            Source="{RelativeSource AncestorType={x:Type Border}}" />
+                        <Binding
+                            FallbackValue="100"
+                            Path="Height"
+                            Source="{RelativeSource AncestorType={x:Type Border}}" />
+                    </MultiBinding>
+                </AbsoluteLayout.WidthRequest>
+                <AbsoluteLayout.HeightRequest>
+                    <Binding Path="WidthRequest" Source="{RelativeSource Self}" />
+                </AbsoluteLayout.HeightRequest>
 
-            <Grid AbsoluteLayout.LayoutFlags="All"
-              AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
-              BindableLayout.ItemsSource="{Binding Board.Cells}"
-              BackgroundColor="Transparent"
-              RowDefinitions="*,*,*"
-              ColumnDefinitions="*,*,*">
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type local:Cell}">
-                        <ImageButton Grid.Row="{Binding R}"
-                                 Grid.Column="{Binding C}"
-                                 Source="{Binding Img}"
-                                 Opacity="{Binding O}"
-                                 BackgroundColor="Black"
-                                 Command="{Binding ClickCommand,Source={RelativeSource AncestorType={x:Type local:MainViewModel}}}"
-                                 CommandParameter="{Binding I}"/>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </Grid>
+                <Grid
+                    AbsoluteLayout.LayoutBounds="0.5,0.5,1,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    BackgroundColor="Transparent"
+                    BindableLayout.ItemsSource="{Binding Board.Cells}"
+                    ColumnDefinitions="*,*,*"
+                    RowDefinitions="*,*,*">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type local:Cell}">
+                            <ImageButton
+                                Grid.Row="{Binding R}"
+                                Grid.Column="{Binding C}"
+                                BackgroundColor="Black"
+                                Command="{Binding ClickCommand, Source={RelativeSource AncestorType={x:Type local:MainViewModel}}}"
+                                CommandParameter="{Binding I}"
+                                Opacity="{Binding O}"
+                                Source="{Binding Img}" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </Grid>
 
-            <Rectangle AbsoluteLayout.LayoutFlags="All"
-                   AbsoluteLayout.LayoutBounds="0.333,0.5,0.012,1"
-                   BackgroundColor="Gray"
-                   IsEnabled="False"/>
-            <Rectangle AbsoluteLayout.LayoutFlags="All"
-                   AbsoluteLayout.LayoutBounds="0.667,0.5,0.012,1"
-                   BackgroundColor="Gray"
-                   IsEnabled="False"/>
-            <Rectangle AbsoluteLayout.LayoutFlags="All"
-                   AbsoluteLayout.LayoutBounds="0.5,0.333,1,0.012"
-                   BackgroundColor="Gray"
-                   IsEnabled="False"/>
-            <Rectangle AbsoluteLayout.LayoutFlags="All"
-                   AbsoluteLayout.LayoutBounds="0.5,0.667,1,0.012"
-                   BackgroundColor="Gray"
-                   IsEnabled="False"/>
-        </AbsoluteLayout>
+                <Rectangle
+                    AbsoluteLayout.LayoutBounds="0.333,0.5,0.012,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    BackgroundColor="Gray"
+                    IsEnabled="False" />
+                <Rectangle
+                    AbsoluteLayout.LayoutBounds="0.667,0.5,0.012,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    BackgroundColor="Gray"
+                    IsEnabled="False" />
+                <Rectangle
+                    AbsoluteLayout.LayoutBounds="0.5,0.333,1,0.012"
+                    AbsoluteLayout.LayoutFlags="All"
+                    BackgroundColor="Gray"
+                    IsEnabled="False" />
+                <Rectangle
+                    AbsoluteLayout.LayoutBounds="0.5,0.667,1,0.012"
+                    AbsoluteLayout.LayoutFlags="All"
+                    BackgroundColor="Gray"
+                    IsEnabled="False" />
+            </AbsoluteLayout>
         </Border>
-        <Grid Grid.Row="1"
-              RowDefinitions="*,*"
-              ColumnDefinitions="100,100,100"
-              HorizontalOptions="Center"
-              VerticalOptions="Center"
-              RowSpacing="5"
-              Margin="5">
-            <Label Grid.Row="0" Grid.Column="0" Text="{Binding [LABEL_PLAYER]}" TextColor="White" HorizontalOptions="Center"/>
-            <Label Grid.Row="1" Grid.Column="0" Text="{Binding CountWinX}" TextColor="White" HorizontalOptions="Center"/>
-            <Label Grid.Row="0" Grid.Column="1" Text="{Binding [LABEL_TIES]}" TextColor="White" HorizontalOptions="Center"/>
-            <Label Grid.Row="1" Grid.Column="1" Text="{Binding CountTie}" TextColor="White" HorizontalOptions="Center"/>
-            <Label Grid.Row="0" Grid.Column="2" Text="{Binding [LABEL_COMPUTER]}" TextColor="White" HorizontalOptions="Center"/>
-            <Label Grid.Row="1" Grid.Column="2" Text="{Binding CountWinO}" TextColor="White" HorizontalOptions="Center"/>
+        <Grid
+            Grid.Row="1"
+            Margin="5"
+            ColumnDefinitions="100,100,100"
+            HorizontalOptions="Center"
+            RowDefinitions="*,*"
+            RowSpacing="5"
+            VerticalOptions="Center">
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalOptions="Center"
+                Text="{Binding [LABEL_PLAYER]}"
+                TextColor="White" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalOptions="Center"
+                Text="{Binding CountWinX}"
+                TextColor="White" />
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                Text="{Binding [LABEL_TIES]}"
+                TextColor="White" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalOptions="Center"
+                Text="{Binding CountTie}"
+                TextColor="White" />
+            <Label
+                Grid.Row="0"
+                Grid.Column="2"
+                HorizontalOptions="Center"
+                Text="{Binding [LABEL_COMPUTER]}"
+                TextColor="White" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="2"
+                HorizontalOptions="Center"
+                Text="{Binding CountWinO}"
+                TextColor="White" />
         </Grid>
     </Grid>
 

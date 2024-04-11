@@ -1,61 +1,59 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:TicTacToe"
-             x:Class="TicTacToe.SettingsPage"
-             BindingContext="{x:Static local:MainViewModel.Current}"
-             Title="{Binding [TITLE_SETTINGS]}"
-             BackgroundColor="Black">
+<ContentPage
+    x:Class="TicTacToe.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:TicTacToe"
+    Title="{Binding [TITLE_SETTINGS]}"
+    BackgroundColor="Black">
 
-    <VerticalStackLayout
-        Spacing="20"
-        VerticalOptions="Center" >
+    <VerticalStackLayout Spacing="20" VerticalOptions="Center">
 
         <Label
+            HorizontalOptions="Center"
             Text="{Binding Culture.NativeName}"
-            TextColor="White"
-            HorizontalOptions="Center" />
+            TextColor="White" />
 
         <CollectionView
-            ItemsSource="{Binding Languages}"
+            HorizontalOptions="Center"
             ItemsLayout="HorizontalList"
-            SelectedItem="{Binding Culture,Mode=TwoWay}"
-            SelectionMode="Single"
-            HorizontalOptions="Center">
+            ItemsSource="{Binding Languages}"
+            SelectedItem="{Binding Culture, Mode=TwoWay}"
+            SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame
+                        Margin="5"
                         BackgroundColor="Black"
-                        BorderColor="Silver"
-                        Margin="5">
+                        BorderColor="Silver">
                         <VerticalStackLayout>
                             <Image
-                                Source="{Binding TwoLetterISOLanguageName,StringFormat='flag_{0}.png'}"
-                                WidthRequest="32"
                                 HeightRequest="32"
-                                HorizontalOptions="Center" />
+                                HorizontalOptions="Center"
+                                Source="{Binding TwoLetterISOLanguageName, StringFormat='flag_{0}.png'}"
+                                WidthRequest="32" />
                             <Label
+                                HorizontalOptions="Center"
                                 Text="{Binding Name}"
-                                TextColor="Silver"
-                                HorizontalOptions="Center" />
+                                TextColor="Silver" />
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        
+
         <Label
+            HorizontalOptions="Center"
             Text="{Binding LevelText}"
-            TextColor="White"
-            HorizontalOptions="Center" />
+            TextColor="White" />
 
         <Slider
-            WidthRequest="100"
-            Minimum="1"
+            HorizontalOptions="Center"
             Maximum="5"
-            Value="{Binding Level,Mode=TwoWay}"
-            HorizontalOptions="Center" />
-        
+            Minimum="1"
+            WidthRequest="100"
+            Value="{Binding Level, Mode=TwoWay}" />
+
     </VerticalStackLayout>
-    
+
 </ContentPage>

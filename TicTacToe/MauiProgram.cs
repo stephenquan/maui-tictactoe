@@ -20,6 +20,10 @@ public static class MauiProgram
 
 		builder.Services.AddLocalization();
 
+		builder.Services.AddTransient<MainPage>();
+		builder.Services.AddTransient<SettingsPage>();
+		builder.Services.AddSingleton<MainViewModel>();
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

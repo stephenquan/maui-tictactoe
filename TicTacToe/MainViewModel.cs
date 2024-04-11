@@ -10,11 +10,7 @@ public partial class MainViewModel : ObservableObject
 {
     private Random random = new Random();
 
-    static private MainViewModel _current;
-    static public MainViewModel Current => _current ??= new MainViewModel();
-
-    private IStringLocalizer _localizer;
-    public IStringLocalizer Localizer => _localizer ??= ServiceHelper.GetService<IStringLocalizer<AppStrings>>();
+    public IStringLocalizer Localizer { get; }
     public string this[string name] => Localizer[name];
     public string this[string name, params object[] arguments] => Localizer[name, arguments];
 
@@ -121,4 +117,8 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    public MainViewModel(IServiceProvider SP)
+    {
+        Localizer = SP.GetService<IStringLocalizer<AppStrings>>();
+    }
 }
